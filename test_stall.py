@@ -33,6 +33,11 @@ class StallTests(unittest.TestCase):
         self.assertEqual(out, [])
         self.assertEqual(len(err), 3)
 
+    def test_unknown_stage_warns_but_still_flags(self):
+        out, err = find_stalled([row("U", "Onsite", "2026-10-01")], TODAY)
+        self.assertEqual(len(out), 1)
+        self.assertIn("unknown stage", err[0])
+
     def test_two_date_formats(self):
         self.assertEqual(parse_date("13/10/2026"), parse_date("2026-10-13"))
 

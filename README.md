@@ -10,8 +10,8 @@ python -m unittest -v                       # tests
 CSV columns: `name,stage,last_moved` (extra columns are ignored). Dates: `YYYY-MM-DD` or `DD/MM/YYYY`.
 
 ## How it ranks
-Each stage has its own limit: applied 5, screen 4, interview 3, offer 2 days. Score = (days idle - limit + 1) × stage weight (1–4). Later stages weigh more because you lose those candidates faster. Hired, rejected and withdrawn candidates are skipped. Bad rows are printed as SKIPPED instead of crashing the run.
+Each stage has its own limit: applied 5, screen 4, interview 3, offer 2 days. Score = (days idle - limit + 1) × stage weight (1–4). Later stages weigh more because you lose those candidates faster. Hired, rejected and withdrawn candidates are skipped. Bad rows are printed as WARNING lines instead of crashing the run.
 
 ## Known limits
-- An unknown stage name silently falls back to a 5-day limit.
+- An unknown stage gets a 5-day limit and a WARNING line. Stages are not configurable yet.
 - No timezone handling. Dates are whole days.

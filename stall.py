@@ -34,6 +34,8 @@ def find_stalled(rows, today, days=None):
             idle = (today - parse_date(row["last_moved"])).days
             if idle < 0:
                 raise ValueError("last_moved is in the future")
+            if stage not in STAGE_LIMIT:
+                errors.append(f"line {line}: unknown stage {stage!r}, using 5-day limit")
             limit = days if days is not None else STAGE_LIMIT.get(stage, 5)
             if idle >= limit:
                 stalled.append({
@@ -62,7 +64,7 @@ def main(argv=None):
     for i, s in enumerate(stalled, 1):
         print(f"{i}. {s['name']} ({s['stage']}, {s['idle']} days idle, score {s['score']}) -> {s['action']}")
     for e in errors:
-        print(f"SKIPPED {e}")
+        print(f"WARNING {e}")
 
 
 if __name__ == "__main__":
